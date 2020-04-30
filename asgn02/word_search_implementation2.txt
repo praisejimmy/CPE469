@@ -1,0 +1,73 @@
+func search_string_conc(file_name string, str string) int{
+    input_ch := make(chan []byte)
+    freq_ch := make(chan int)
+    var wg sync.WaitGroup
+    str_freq := 0
+    str_len := len(str)
+    f, err := os.Open(os.Args[1])
+    if err != nil {
+        fmt.Println("Unable to open file")
+        os.Exit(-1)
+    }
+    defer f.Close()
+
+    for i := 0; i < runtime.NumCPU(); i++ {
+        wg.Add(1)
+        go func(input_ch chan []byte, freq_ch chan int) {
+            for text := range input_ch {
+                partial_freq := 0
+                words := strings.Split(string(text), " ")
+                for i := 0; i < len(words); i++ {
+                    if strncmp(str, words[i], str_len) {
+                        partial_freq++
+                    }
+                }
+                freq_ch<-partial_freq
+            }
+            wg.Done()
+        }(input_ch, freq_ch)
+    }
+    var bndry_str []byte
+    first := true
+    for {
+        txt_curr := make([]byte, 10000)
+        bytes_read, err := f.Read(txt_curr)
+        if err != nil {
+            fmt.Println("File read error")
+            os.Exit(-1)
+        }
+        if first && txt_curr[bytes_read - 1] != ' ' {
+            i := 9999
+            for {
+                if (txt_curr[i] == ' ') {
+                    bndry_str = txt_curr[i:10000]
+                    break
+                }
+                i--
+            }
+            first = false
+        } else {
+            i := 0
+            for {
+                if (txt_curr[i] == ' ') {
+                    bndry_str = append(bndry_str, txt_curr[0:i]...)
+                    break
+                }
+                i++
+            }
+            if (strncmp(str, string(bndry_str), len(str))) {
+                str_freq++
+            }
+            first = true
+        }
+        input_ch <- txt_curr
+        str_freq += <-freq_ch
+        if bytes_read < 10000 {
+            break
+        }
+    }
+    close(input_ch)
+    wg.Wait()
+    close(freq_ch)
+    return str_freq
+}
