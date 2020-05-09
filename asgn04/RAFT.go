@@ -69,6 +69,15 @@ func Node_Machine(my_id int) {
 }
 
 func Follower_State(my_id int) State {
+    queue_cleared := false
+    for ; queue_cleared; {
+        select {
+        case <- action_chans[my_id]:
+
+        default:
+            queue_cleared = true
+        }
+    }
     ms_time := time.Duration(rand.Intn(151) + 150)
     leader_ping_timeout := time.NewTimer(ms_time * time.Millisecond)
     for {
@@ -100,7 +109,7 @@ func Vote(my_id int, requester int) {
     for {
         select {
         case resp := <- action_chans[my_id]:
-            if resp.sender_id == requester && resp.action == Complete_Term {
+            if (resp.sender_id == requester) && (resp.action == Complete_Term) {
                 return
             }
 
@@ -122,16 +131,16 @@ func Candidate_State(my_id int) State {
             case action_chans[i] <- vote_req:
 
             default:
-
+                break
             }
         }
     }
-
     term_timeout := time.NewTimer(20 * time.Millisecond)
 
     for {
         select {
         case response := <- resp_chans[my_id]:
+            fmt.Printf("ID: %d, Sender: %d, Action: %d\n", my_id, response.sender_id, response.action)
             if response.action == Vote_Cast {
                 vote_cnt++
             }
@@ -142,7 +151,12 @@ func Candidate_State(my_id int) State {
             end_term_message.action = Complete_Term
             for j := 0; j < num_nodes; j++ {
                 if j != my_id {
-                    action_chans[j] <- end_term_message
+                    select {
+                    case action_chans[j] <- end_term_message:
+                        break
+                    default:
+                        break
+                    }
                 }
             }
             var next_state State
@@ -155,14 +169,7 @@ func Candidate_State(my_id int) State {
             } else {
                 next_state = Follower
             }
-            for {
-                select {
-                case <- action_chans[my_id]:
-
-                default:
-                    return next_state
-                }
-            }
+            return next_state
 
         default:
             break
@@ -172,7 +179,7 @@ func Candidate_State(my_id int) State {
 
 func Leader_State(my_id int) State {
     ping_timeout := time.NewTimer(5 * time.Millisecond)
-    drop_leadership_timeout := time.NewTimer(15 * time.Second)
+    drop_leadership_timeout := time.NewTimer(8 * time.Second)
     var ping_message Message
     ping_message.sender_id = my_id
     ping_message.action = Leader_Ping
