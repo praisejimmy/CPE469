@@ -120,7 +120,7 @@ func Vote(my_id int, requester int) {
 }
 
 func Candidate_State(my_id int) State {
-    fmt.Println("Node ", my_id, " up for candidacy")
+    fmt.Println("ID: ", my_id, " up for candidacy")
     var vote_req Message
     vote_cnt := 1
     vote_req.sender_id = my_id
@@ -140,7 +140,6 @@ func Candidate_State(my_id int) State {
     for {
         select {
         case response := <- resp_chans[my_id]:
-            fmt.Printf("ID: %d, Sender: %d, Action: %d\n", my_id, response.sender_id, response.action)
             if response.action == Vote_Cast {
                 vote_cnt++
             }
@@ -164,7 +163,7 @@ func Candidate_State(my_id int) State {
                 curr_leader_mux.Lock()
                 curr_leader = my_id
                 curr_leader_mux.Unlock()
-                fmt.Println("New leader elected, ID: ", my_id)
+                fmt.Println("ID: ", my_id, " elected as leader")
                 next_state = Leader
             } else {
                 next_state = Follower
