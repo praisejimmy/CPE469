@@ -6,6 +6,7 @@ import (
 	"strings"
 	"sync"
 )
+// Heartbeat code I copied over because I wasn't sure if we needed to include it since dynamo does
 
 func main(){
     var wg sync.WaitGroup
@@ -49,6 +50,8 @@ func main(){
 
     fmt.Println("Finished main")
 }
+//Hashtable code I had started writing
+
 type key_value struct {
 	key string
   value int
