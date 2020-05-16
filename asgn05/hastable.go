@@ -1,61 +1,32 @@
 package main
 
 import (
-	"crypto/md5"
+	//"crypto/md5"
 	"fmt"
-	"strings"
-	"sync"
+	//"strings"
 )
-// Heartbeat code I copied over because I wasn't sure if we needed to include it since dynamo does
 
-func main(){
-    var wg sync.WaitGroup
-    var chans [5]chan [5]Heartbeat_Table
-    fail_channel := make(chan int)
-    //Initialize channels to publish tables on
-    for i := range chans {
-        chans[i] = make(chan [8] Heartbeat_Table, 8)
-    }
-    wg.Add(1)
-    //Go routine that sends a message to fail on a channel
-    //Random because don't know which node will read first.
-    go func(fail_channel chan int){
-        fail_timer := time.NewTimer(15 * time.Second)
-        fmt.Println("Going to start kill timer")
-        for{
-            select{
-                case <- fail_timer.C:
-                    fmt.Println("Sending fail notice")
-                    fail_channel <- 1
-                    fail_timer = time.NewTimer(15 * time.Second)
-            }
-        }
-        wg.Done()
-    }(fail_channel)
-    //Launch 8 computing nodes with the correct neighbor channels.
-    for i := 0; i < 8; i ++{
-        table_temp := Heartbeat_Table{i, 1, time.Now()}
-        if i == 0{
-            wg.Add(1)
-            go node(chans[i], table_temp, &wg, chans[7], chans[1], fail_channel)
-        }else if(i == 7){
-            wg.Add(1)
-            go node(chans[i], table_temp, &wg, chans[6], chans[0], fail_channel)
-        }else{
-            wg.Add(1)
-            go node(chans[i], table_temp, &wg, chans[i-1], chans[i+1], fail_channel)
-        }
-    }
-    wg.Wait()
-
-    fmt.Println("Finished main")
-}
-//Hashtable code I had started writing
+type request_type int
+const(put_type request_type = 1
+	  pull_type request_type = 2
+)
 
 type key_value struct {
-	key string
-  value int
-  request_type int
+	key          string
+	value        int
+	req 		request_type
+}
+
+type message_type int
+const(update_type message_type = 1
+	  replicate_type message_type = 2
+	  response_type message_type = 3
+)
+
+type message struct {
+	node_id		int
+	mes			message_type
+	key_values  []key_value
 }
 
 func main() {
@@ -64,23 +35,53 @@ func main() {
 	//Initializing Channels
 	fmt.Println("Initializing channels for communication")
 	//These channels are to send key values
-	var kv_channels [num_nodes]chan key_value
-	for i := range kv_channels {
-		kv_channels[i] = make(chan key_value)
+	var kv_channels []chan key_value
+	for i := 0; i < num_nodes; i++ {
+		temp_chan := make(chan key_value)
+		kv_channels = append(kv_channels, temp_chan)
+	}
+
+	for i := 0; i < num_nodes; i++ {
+		go bucket(kv_channels[i], (i+1) * 71)
+	}
+
+	var input_kv key_value
+
+	input_kv.key = "Martha"
+	input_kv.value = 10
+	input_kv.req = put_type
+	kv_channels[0] <- input_kv
+
+	input_kv.key = "Martha"
+	input_kv.value = 0
+	input_kv.req = pull_type
+
+	kv_channels[0] <- input_kv
+
+	for response := range kv_channels[0] {
+		fmt.Println("Key: ", response.key, " Value: ", response.value)
+	}
+
+	for {
 	}
 
 }
 
-func bucket(my_kv_chan chan key_value, node_number int){
-  put := 1
-  pull := 2
-  var bucket_values map[string]int
-  for {
-    select{
-    case input_kv := <- my_kv_chan:
-      if input_kv.request_type == put{
-
-      }
-    }
-  }
+func bucket(my_kv_chan chan key_value, node_number int) {
+	var bucket_values map[string]int = make(map[string]int)
+	var return_kv key_value
+	fmt.Println("Lanching bucket: ", node_number) 
+	for {
+		select {
+		case input_kv := <-my_kv_chan:
+			if input_kv.req == put_type {
+				bucket_values[input_kv.key] = input_kv.value
+			} else if input_kv.req == pull_type {
+				return_kv.req = pull_type
+				return_kv.key = input_kv.key
+				return_kv.value = bucket_values[input_kv.key]
+				my_kv_chan <- return_kv
+			}
+		}
+	}
 }
