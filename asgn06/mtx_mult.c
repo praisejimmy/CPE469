@@ -18,6 +18,7 @@ int main(int argc, char *argv[] ) {
     chunk_size = 800/numprocs;
     if (rank == 0) { /* Only on the root task... */
         /* Initialize Matrix and Vector */
+        t1 = MPI_Wtime();
         for(i=0;i<800;i++) {
             for(j=0;j<800;j++) {
                 seq_result[i][j] = 0;
@@ -25,6 +26,7 @@ int main(int argc, char *argv[] ) {
                 mtx2[i][j] = i*j;
             }
         }
+        t2 = MPI_Wtime();
     }
     if (rank == 0) {
         for(i=0;i<800;i++) {
@@ -39,14 +41,14 @@ int main(int argc, char *argv[] ) {
             for(j=0;j<800;j++) {
                 printf(" %d \t ",global_result[i][j]);
             }
+            printf("\n");
         }
+        printf("Time: %f\n", t2 - t1);
     }
-    /* Distribute Vector */
-    /* The vector is just send to everyone */
-    MPI_Bcast(vector,800,MPI_INT,0,MPI_COMM_WORLD);
-    /* Distribute Matrix */
+    /* Distribute Matricies */
     /* Assume the matrix is too big to bradcast. Send blocks of rows to each task,
     nrows/nprocs to each one */
+    t1 = MPI_Wtime();
     MPI_Scatter(mtx1,800*chunk_size,MPI_INT,local_matrix1,800*chunk_size,MPI_INT,
         0,MPI_COMM_WORLD);
 
@@ -66,6 +68,7 @@ int main(int argc, char *argv[] ) {
     /*Send result back to master */
     MPI_Gather(result,chunk_size,MPI_INT,global_result,chunk_size,MPI_INT,
     0,MPI_COMM_WORLD);
+    t2 = MPI_Wtime();
     /*Display result */
     if(rank==0) {
         printf("Concurrent result:\n");
@@ -73,7 +76,9 @@ int main(int argc, char *argv[] ) {
             for(j=0;j<800;j++) {
                 printf(" %d \t ",global_result[i][j]);
             }
+            printf("\n")
         }
+        printf("Time: %f\n", t2 - t1);
     }
     MPI_Finalize();
     return 0;
