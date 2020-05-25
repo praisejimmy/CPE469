@@ -24,7 +24,6 @@ int main(int argc, char *argv[] ) {
     double t1, t2;
     MPI_Status status;
     /* Initialize MPI */
-    printf("Running first command of MPI\n");
     allocate_array(mtx1);
     allocate_array(mtx2);
     allocate_array(local_matrix1);
