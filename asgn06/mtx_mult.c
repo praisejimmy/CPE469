@@ -4,7 +4,7 @@
 
 void allocate_array(int ** array){
     int i = 0;
-    fprintf(stderr, "Allocating memory\n");
+    printf("Allocating memory\n");
     if((array = (int **) malloc(sizeof(int *) * 800)) == NULL)
     {
         perror(NULL);
@@ -39,7 +39,7 @@ int main(int argc, char *argv[] ) {
     MPI_Init(&argc,&argv);
     MPI_Comm_rank( MPI_COMM_WORLD, &rank);
     MPI_Comm_size( MPI_COMM_WORLD, &numprocs);
-    fprintf(stderr, "Hello from process %d of %d \n",rank,numprocs);
+    printf("Hello from process %d of %d \n",rank,numprocs);
     chunk_size = 800/numprocs;
     if (rank == 0) { /* Only on the root task... */
         /* Initialize Matrix and Vector */
