@@ -4,7 +4,7 @@
 
 void allocate_array(int ** array){
     int i = 0;
-    printf("Allocating memory\n");
+    fprintf(stderr, "Allocating memory\n");
     if((array = (int **) malloc(sizeof(int *) * 800)) == NULL)
     {
         perror(NULL);
@@ -72,8 +72,8 @@ int main(int argc, char *argv[] ) {
     }
     /* Distribute Matricies */
     /* Assume the matrix is too big to bradcast. Send blocks of rows to each task,
-    nrows/nprocs to each one */'
-    printf("Computed Sequential result\n");
+    nrows/nprocs to each one */
+    fprintf(stderr, "Computed Sequential result\n");
     t1 = MPI_Wtime();
     MPI_Scatter(mtx1,800*chunk_size,MPI_INT,local_matrix1,800*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
 
