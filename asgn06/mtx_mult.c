@@ -16,6 +16,7 @@ void allocate_array(int ** array){
             exit(-1);
         }
     }
+    fprintf(stderr, "Done allocating memory\n");
 }
 
 int main(int argc, char *argv[] ) {
