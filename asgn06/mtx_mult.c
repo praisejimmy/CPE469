@@ -4,7 +4,7 @@
 
 int ** allocate_array(int ** array){
     int i = 0;
-    fprintf(stderr, "Allocating memory %p\n", (void *) array);
+
     if((array = (int **) malloc(sizeof(int *) * 800)) == NULL)
     {
         perror(NULL);
@@ -16,7 +16,6 @@ int ** allocate_array(int ** array){
             exit(-1);
         }
     }
-    fprintf(stderr, "Done allocating memory %p\n", (void *) array);
     return array;
 }
 
@@ -30,7 +29,7 @@ int main(int argc, char *argv[] ) {
     double t1, t2;
     MPI_Status status;
     /* Initialize MPI */
-    printf("mtx1 pointer value before: %p", (void *) mtx1);
+
     mtx1 = allocate_array(mtx1);
     mtx2 = allocate_array(mtx2);
     local_matrix1 = allocate_array(local_matrix1);
@@ -38,7 +37,6 @@ int main(int argc, char *argv[] ) {
     seq_result = allocate_array(seq_result);
     global_result = allocate_array(global_result);
     result = allocate_array(result);
-    printf("mtx1 pointer value after: %p", (void *) mtx1);
 
 
     MPI_Init(&argc,&argv);
