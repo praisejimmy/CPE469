@@ -5,13 +5,13 @@
 int ** allocate_array(int ** array){
     int i = 0;
 
-    if((array = (int **) malloc(sizeof(int *) * 800)) == NULL)
+    if((array = (int **) calloc(800, sizeof(int *))) == NULL)
     {
         perror(NULL);
         exit(-1);
     }
     for(i = 0; i < 800; i++){
-        if((array[i] = (int *)malloc(sizeof(int) * 800)) == NULL){
+        if((array[i] = (int *)calloc(800, sizeof(int))) == NULL){
             perror(NULL);
             exit(-1);
         }
