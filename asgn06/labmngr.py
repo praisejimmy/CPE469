@@ -16,7 +16,7 @@ parser = argparse.ArgumentParser(
     usage='%(prog)s [-options] exec')
 parser.add_argument('--hostfile', action='store', default="./host_file",
                     help='Override hostfile\n(Default: ./host_file)')
-parser.add_argument('executable', metavar='exec', 
+parser.add_argument('executable', metavar='exec',
                     help='the executable to run', default = "")
 parser.add_argument('-n', metavar='NPM', default = 1,
                     help='Override the number of MPI nodes on each machine\n(Default: 1)')
@@ -32,7 +32,7 @@ def verbose_print(*largs, **kwargs):
 def check_mpi():
     FNULL = open(os.devnull, 'w')
     try:
-        subprocess.call(["mpic++", "-v"], stderr=FNULL)
+        subprocess.call(["/usr/lib64/openmpi/bin/mpic++", "-v"], stderr=FNULL)
     except OSError as e:
         print("Failed to find MPI in PATH, please add to .bashrc:")
         print("\tLD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib64/openmpi/lib")
@@ -43,9 +43,9 @@ def check_mpi():
 def main():
     print ("This is a Lab 127 Impromptu Cluster Creator/Manager")
     check_mpi()
-    
+
     #exit(1)
-    
+
     mpi_exec = args.executable
 
     mpi_source = "/usr/lib64/openmpi/bin/mpiexec "
@@ -53,18 +53,17 @@ def main():
     mpi_args += " --mca plm_rsh_no_tree_spawn 1"
     mpi_args += " --mca btl_tcp_if_include ens6f0"
     mpi_args += " --prefix /usr/lib64/openmpi"
-    mpi_args += " --map-by ppr:" + str(args.n) + ":node " 
+    mpi_args += " --map-by ppr:" + str(args.n) + ":node "
     if args.verbose:
         mpi_args += " -display-map "
 
     print(mpi_source + mpi_args + mpi_exec)
 
     verbose_print(mpi_exec + " is running...")
-    
+
     system(mpi_source + mpi_args + mpi_exec)
 
     verbose_print("Processing has finished")
     system("exit")
 
 main()
-
