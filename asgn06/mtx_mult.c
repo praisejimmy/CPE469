@@ -73,7 +73,7 @@ int main(int argc, char *argv[] ) {
             for(j=0;j<800;j++) {
                 printf(" %d \t ",global_result[i][j]);
             }
-            printf("\n")
+            printf("\n");
         }
         printf("Time: %f\n", t2 - t1);
     }
