@@ -11,6 +11,7 @@ int main(int argc, char *argv[] ) {
     double t1, t2;
     MPI_Status status;
     /* Initialize MPI */
+    printf("Running first command of MPI\n");
     MPI_Init( &argc,&argv);
     MPI_Comm_rank( MPI_COMM_WORLD, &rank);
     MPI_Comm_size( MPI_COMM_WORLD, &numprocs);
