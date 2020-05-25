@@ -29,6 +29,7 @@ int main(int argc, char *argv[] ) {
     double t1, t2;
     MPI_Status status;
     /* Initialize MPI */
+    printf("mtx1 pointer value before: %p", (void *) mtx1);
     allocate_array(mtx1);
     allocate_array(mtx2);
     allocate_array(local_matrix1);
@@ -36,6 +37,8 @@ int main(int argc, char *argv[] ) {
     allocate_array(seq_result);
     allocate_array(global_result);
     allocate_array(result);
+    printf("mtx1 pointer value after: %p", (void *) mtx1);
+
 
     MPI_Init(&argc,&argv);
     MPI_Comm_rank( MPI_COMM_WORLD, &rank);
