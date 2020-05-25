@@ -49,9 +49,9 @@ int main(int argc, char *argv[] ) {
     /* Assume the matrix is too big to bradcast. Send blocks of rows to each task,
     nrows/nprocs to each one */
     t1 = MPI_Wtime();
-    MPI_Scatter(mtx1,800*chunk_size,MPI_INT,(void **)local_matrix1,800*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
+    MPI_Scatter(mtx1,800*chunk_size,MPI_INT,(void)local_matrix1,800*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
 
-    MPI_Scatter(mtx2,800*chunk_size,MPI_INT,(void **)local_matrix2,800*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
+    MPI_Scatter(mtx2,800*chunk_size,MPI_INT,(void)local_matrix2,800*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
 
     /*Each processor has a chunk of rows, now multiply and build a part of the solution vector
     */
