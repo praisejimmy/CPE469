@@ -1,17 +1,37 @@
-#include <mpi.h>
 #include <stdio.h>
+#include <mpi.h>
+
+void allocate_array(int ** array){
+    int i = 0;
+    if((array = (int **) malloc(sizeof(int *) * 800)) == NULL)
+    {
+        perror(NULL);
+        exit(-1);
+    }
+    for(i = 0; i < 800; i++){
+        array[i] = (int *)malloc(sizeof(int) * 800);
+    }
+}
 
 int main(int argc, char *argv[] ) {
     int numprocs, rank, chunk_size, i,j,k;
     int max, mymax,rem;
-    int mtx1[800][800]; int mtx2[800][800];
-    int local_matrix1[800][800]; int local_matrix2[800][800]; int result[800][800];
-    int global_result[800][800];
-    int seq_result[800][800];
+    int ** mtx1; int ** mtx2;
+    int **local_matrix1; int **local_matrix2; int ** result;
+    int ** global_result;
+    int ** seq_result;
     double t1, t2;
     MPI_Status status;
     /* Initialize MPI */
     printf("Running first command of MPI\n");
+    allocate_array(mtx1);
+    allocate_array(mtx2);
+    allocate_array(local_matrix1);
+    allocate_array(local_matrix2);
+    allocate_array(seq_result);
+    allocate_array(global_result);
+    allocate_array(result);
+
     MPI_Init(0,0);
     MPI_Comm_rank( MPI_COMM_WORLD, &rank);
     MPI_Comm_size( MPI_COMM_WORLD, &numprocs);
