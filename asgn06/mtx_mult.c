@@ -20,7 +20,7 @@ void allocate_array(int ** array){
 }
 
 int main(int argc, char *argv[] ) {
-    int numprocs, rank, chunk_size, i,j,k;
+    int numprocs = 1, rank, chunk_size, i,j,k;
     int max, mymax,rem;
     int ** mtx1 = NULL; int ** mtx2 = NULL;
     int **local_matrix1 = NULL; int **local_matrix2 = NULL; int ** result = NULL;
