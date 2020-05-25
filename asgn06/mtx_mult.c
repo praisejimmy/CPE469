@@ -17,10 +17,10 @@ void allocate_array(int ** array){
 int main(int argc, char *argv[] ) {
     int numprocs, rank, chunk_size, i,j,k;
     int max, mymax,rem;
-    int ** mtx1; int ** mtx2;
-    int **local_matrix1; int **local_matrix2; int ** result;
-    int ** global_result;
-    int ** seq_result;
+    int ** mtx1 = NULL; int ** mtx2 = NULL;
+    int **local_matrix1 = NULL; int **local_matrix2 = NULL; int ** result = NULL;
+    int ** global_result = NULL;
+    int ** seq_result = NULL;
     double t1, t2;
     MPI_Status status;
     /* Initialize MPI */
