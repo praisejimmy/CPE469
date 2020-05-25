@@ -92,14 +92,22 @@ int main(int argc, char *argv[] ) {
     /*Display result */
     if(rank==0) {
         printf("Concurrent result:\n");
+        for(i=0;i<800;i++) {
+            for(j=0;j<800;j++) {
+                printf(" %d \t ",global_result[i][j]);
+            }
+            printf("\n");
+        }
         printf("Time: %f\n", t2 - t1);
     }
     MPI_Finalize();
 
     for(i = 0; i < 800; i++){
         for(j = 0; j < 800; j++){
-            if(global_result[i][j] != seq_result[i][j])
-                printf("Seq result and MPI result disagree");
+            if(global_result[i][j] != result[i][j]){
+                printf("Own result and MPI result disagree");
+                return;
+            }
         }
     }
         printf("Seq result and MPI result agree");
