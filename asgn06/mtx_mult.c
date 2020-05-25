@@ -100,7 +100,7 @@ int main(int argc, char *argv[] ) {
         for(j = 0; j < 800; j++){
             if(global_result[i][j] != result[i][j]){
                 printf("Own result and MPI result disagree");
-                return;
+                return 0;
             }
         }
     }
