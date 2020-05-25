@@ -32,7 +32,7 @@ def verbose_print(*largs, **kwargs):
 def check_mpi():
     FNULL = open(os.devnull, 'w')
     try:
-        subprocess.call(["/usr/lib64/openmpi/bin/mpic++", "-v"], stderr=FNULL)
+        subprocess.call(["mpic++", "-v"], stderr=FNULL)
     except OSError as e:
         print("Failed to find MPI in PATH, please add to .bashrc:")
         print("\tLD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib64/openmpi/lib")
