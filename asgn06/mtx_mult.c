@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <mpi.h>
 
-void allocate_array(int ** array){
+int ** allocate_array(int ** array){
     int i = 0;
-    fprintf(stderr, "Allocating memory\n");
+    fprintf(stderr, "Allocating memory %p\n", (void *) array);
     if((array = (int **) malloc(sizeof(int *) * 800)) == NULL)
     {
         perror(NULL);
@@ -16,7 +16,7 @@ void allocate_array(int ** array){
             exit(-1);
         }
     }
-    fprintf(stderr, "Done allocating memory\n");
+    fprintf(stderr, "Done allocating memory %p\n", (void *) array);
 }
 
 int main(int argc, char *argv[] ) {
