@@ -39,7 +39,7 @@ int main(int argc, char *argv[] ) {
         printf("Sequential result:\n");
         for(i=0;i<800;i++) {
             for(j=0;j<800;j++) {
-                printf(" %d \t ",global_result[i][j]);
+                printf(" %d \t ",seq_result[i][j]);
             }
             printf("\n");
         }
@@ -78,5 +78,13 @@ int main(int argc, char *argv[] ) {
         printf("Time: %f\n", t2 - t1);
     }
     MPI_Finalize();
+
+    for(i = 0; i < 800; i++){
+        for(j = 0; j < 800; j++){
+            if(global_result[i][j] != seq_result[i][j])
+                printf("Seq result and MPI result disagree");
+        }
+    }
+        printf("Seq result and MPI result agree");
     return 0;
 }
