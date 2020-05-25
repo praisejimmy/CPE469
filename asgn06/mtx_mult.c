@@ -35,7 +35,7 @@ int main(int argc, char *argv[] ) {
     allocate_array(global_result);
     allocate_array(result);
 
-    MPI_Init(0,0);
+    MPI_Init(&argc,&argv);
     MPI_Comm_rank( MPI_COMM_WORLD, &rank);
     MPI_Comm_size( MPI_COMM_WORLD, &numprocs);
     printf("Hello from process %d of %d \n",rank,numprocs);
