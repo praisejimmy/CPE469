@@ -92,9 +92,16 @@ int main(int argc, char *argv[] ) {
     /*Display result */
     if(rank==0) {
         printf("Concurrent result:\n");
+        for(i=0;i<800;i++) {
+            for(j=0;j<800;j++) {
+                printf(" %d \t ",global_result[i][j]);
+            }
+            printf("\n");
+        }
         printf("Time: %f\n", t2 - t1);
     }
     MPI_Finalize();
+
     if(rank == 0){
         for(i = 0; i < 800; i++){
             for(j = 0; j < 800; j++){
