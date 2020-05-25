@@ -49,8 +49,7 @@ int main(int argc, char *argv[] ) {
     /* Assume the matrix is too big to bradcast. Send blocks of rows to each task,
     nrows/nprocs to each one */
     t1 = MPI_Wtime();
-    MPI_Scatter(mtx1,800*chunk_size,MPI_INT,local_matrix1,800*chunk_size,MPI_INT,
-        (void *) 0,MPI_COMM_WORLD);
+    MPI_Scatter(mtx1,800*chunk_size,MPI_INT,local_matrix1,800*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
 
     MPI_Scatter(mtx2,800*chunk_size,MPI_INT,local_matrix2,800*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
 
