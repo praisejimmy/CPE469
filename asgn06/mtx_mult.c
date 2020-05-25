@@ -10,7 +10,10 @@ void allocate_array(int ** array){
         exit(-1);
     }
     for(i = 0; i < 800; i++){
-        array[i] = (int *)malloc(sizeof(int) * 800);
+        if((array[i] = (int *)malloc(sizeof(int) * 800)) == NULL){
+            perror(NULL);
+            exit(-1);
+        }
     }
 }
 
