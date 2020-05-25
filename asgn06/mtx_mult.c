@@ -64,8 +64,7 @@ int main(int argc, char *argv[] ) {
         }
     }
     /*Send result back to master */
-    MPI_Gather(result,chunk_size,MPI_INT,global_result,chunk_size,MPI_INT,
-    0,MPI_COMM_WORLD);
+    MPI_Gather(result,chunk_size,MPI_INT,global_result,chunk_size,MPI_INT, 0,MPI_COMM_WORLD);
     t2 = MPI_Wtime();
     /*Display result */
     if(rank==0) {
