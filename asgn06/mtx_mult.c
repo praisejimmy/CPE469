@@ -4,6 +4,7 @@
 
 void allocate_array(int ** array){
     int i = 0;
+    printf("Allocating memory\n");
     if((array = (int **) malloc(sizeof(int *) * 800)) == NULL)
     {
         perror(NULL);
