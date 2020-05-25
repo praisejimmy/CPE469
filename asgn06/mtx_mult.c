@@ -47,6 +47,7 @@ int main(int argc, char *argv[] ) {
         t1 = MPI_Wtime();
         for(i=0;i<800;i++) {
             for(j=0;j<800;j++) {
+                fprintf(stderr, "Initializing arrays at i: %d and j: %d\n", i, j);
                 seq_result[i][j] = 0;
                 mtx1[i][j] = i+j;
                 mtx2[i][j] = i*j;
