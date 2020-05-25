@@ -20,7 +20,7 @@ void allocate_array(int ** array){
 }
 
 int main(int argc, char *argv[] ) {
-    int numprocs = 1, rank, chunk_size, i,j,k;
+    int numprocs, rank, chunk_size, i,j,k;
     int max, mymax,rem;
     int ** mtx1 = NULL; int ** mtx2 = NULL;
     int **local_matrix1 = NULL; int **local_matrix2 = NULL; int ** result = NULL;
@@ -37,6 +37,10 @@ int main(int argc, char *argv[] ) {
     allocate_array(global_result);
     allocate_array(result);
 
+    MPI_Init(&argc,&argv);
+    MPI_Comm_rank( MPI_COMM_WORLD, &rank);
+    MPI_Comm_size( MPI_COMM_WORLD, &numprocs);
+    printf("Hello from process %d of %d \n",rank,numprocs);
     chunk_size = 800/numprocs;
     if (rank == 0) { /* Only on the root task... */
         /* Initialize Matrix and Vector */
@@ -72,12 +76,6 @@ int main(int argc, char *argv[] ) {
     /* Assume the matrix is too big to bradcast. Send blocks of rows to each task,
     nrows/nprocs to each one */
     fprintf(stderr, "Computed Sequential result\n");
-    MPI_Init(&argc,&argv);
-    MPI_Comm_rank( MPI_COMM_WORLD, &rank);
-    MPI_Comm_size( MPI_COMM_WORLD, &numprocs);
-    printf("Hello from process %d of %d \n",rank,numprocs);
-
-
     t1 = MPI_Wtime();
     MPI_Scatter(mtx1,800*chunk_size,MPI_INT,local_matrix1,800*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
 
