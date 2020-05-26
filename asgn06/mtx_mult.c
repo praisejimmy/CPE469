@@ -29,7 +29,7 @@ void transpose(int **array, int square_size) {
             array[j][i] = temp;
         }
     }
-    printf("After tranpose in function\n")
+    printf("After tranpose in function\n");
     for (i = 0; i < 10; i++) {
         for (j = 0; j < 10; j++) {
             printf("%d\t", mtx2[i][j]);
