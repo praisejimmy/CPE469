@@ -21,27 +21,12 @@ int ** allocate_array(int ** array){
 
 void transpose(int **array, int square_size) {
     int i, j, temp;
-    printf("Before tranpose inside function\n");
-    for (i = 0; i < 10; i++) {
-        for (j = 0; j < 10; j++) {
-            printf("%d\t", array[i][j]);
-        }
-        printf("\n");
-    }
-    for (i = 0; i < square_size; i++) {
-        for (j = i+1; j < square_size; j++) {
+    for (i = 1; i < square_size; i++) {
+        for (j = 0; j < i; j++) {
             temp = array[i][j];
-            printf("Temp: %d array[%d][%d]: %d array[%d][%d]: %d\n", temp, i, j, array[i][j], j, i, array[j][i]);
             array[i][j] = array[j][i];
             array[j][i] = temp;
         }
-    }
-    printf("After tranpose in function\n");
-    for (i = 0; i < 10; i++) {
-        for (j = 0; j < 10; j++) {
-            printf("%d\t", array[i][j]);
-        }
-        printf("\n");
     }
 }
 
@@ -76,8 +61,8 @@ int main(int argc, char *argv[] ) {
         for(i=0;i<10;i++) {
             for(j=0;j<10;j++) {
                 seq_result[i][j] = 0;
-                mtx1[i][j] = i+j;
-                mtx2[i][j] = i*j;
+                mtx1[i][j] = rand() % 1001
+                mtx2[i][j] = rand() % 1001
             }
         }
         t2 = MPI_Wtime();
