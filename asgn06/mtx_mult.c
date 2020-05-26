@@ -31,6 +31,7 @@ void transpose(int **array, int square_size) {
     for (i = 0; i < square_size; i++) {
         for (j = i+1; j < square_size; j++) {
             temp = array[i][j];
+            printf("Temp: %d array[i][j]: %d array[j][i]: %d\n", temp, array[i][j], array[j][i]);
             array[i][j] = array[j][i];
             array[j][i] = temp;
         }
