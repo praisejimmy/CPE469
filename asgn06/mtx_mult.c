@@ -102,8 +102,9 @@ int main(int argc, char *argv[] ) {
     /* Distribute Matricies */
     /* Assume the matrix is too big to bradcast. Send blocks of rows to each task,
     nrows/nprocs to each one */
-    printf("Computed sequential result\n");
-    fflush(stdout);
+    if (rank == 0) {
+        printf("Computed sequential result\n");
+    }
     t1 = MPI_Wtime();
     if (rank == 0) {
         transpose(mtx2, 10);
