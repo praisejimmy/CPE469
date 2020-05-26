@@ -86,7 +86,7 @@ int main(int argc, char *argv[] ) {
         for(i=0;i<10;i++) {
             for(j=0;j<10;j++) {
                 for(k=0;k<10;k++) {
-                    seq_result[i][j] = mtx1[i][k] * mtx2[k][j];
+                    seq_result[i][j] += mtx1[i][k] * mtx2[k][j];
                 }
             }
         }
@@ -102,7 +102,7 @@ int main(int argc, char *argv[] ) {
     /* Distribute Matricies */
     /* Assume the matrix is too big to bradcast. Send blocks of rows to each task,
     nrows/nprocs to each one */
-    fprintf(stdout, "Computed Sequential result\n");
+    printf("Computed sequential result\n");
     fflush(stdout);
     t1 = MPI_Wtime();
     if (rank == 0) {
