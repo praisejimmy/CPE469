@@ -19,6 +19,17 @@ int ** allocate_array(int ** array){
     return array;
 }
 
+void transpose(int **array, int square_size) {
+    int i, j, temp;
+    for (i = 1; i < square_size; i++) {
+        for (j = 0; j < i; j++) {
+            temp = array[i][j];
+            array[i][j] = array[j][i];
+            array[j][i] = temp;
+        }
+    }
+}
+
 int main(int argc, char *argv[] ) {
     int numprocs, rank, chunk_size, i,j,k;
     int max, mymax,rem;
@@ -78,6 +89,8 @@ int main(int argc, char *argv[] ) {
     nrows/nprocs to each one */
     fprintf(stderr, "Computed Sequential result\n");
     t1 = MPI_Wtime();
+    transpose(mtx2, 800);
+
     MPI_Scatter(mtx1,800*chunk_size,MPI_INT,local_matrix1,800*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
 
     MPI_Scatter(mtx2,800*chunk_size,MPI_INT,local_matrix2,800*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
