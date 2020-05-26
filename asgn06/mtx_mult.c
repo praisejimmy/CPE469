@@ -5,13 +5,13 @@
 int ** allocate_array(int ** array){
     int i = 0;
 
-    if((array = (int **) calloc(800, sizeof(int *))) == NULL)
+    if((array = (int **) calloc(10, sizeof(int *))) == NULL)
     {
         perror(NULL);
         exit(-1);
     }
-    for(i = 0; i < 800; i++){
-        if((array[i] = (int *)calloc(800, sizeof(int))) == NULL){
+    for(i = 0; i < 10; i++){
+        if((array[i] = (int *)calloc(10, sizeof(int))) == NULL){
             perror(NULL);
             exit(-1);
         }
@@ -54,12 +54,12 @@ int main(int argc, char *argv[] ) {
     MPI_Comm_rank( MPI_COMM_WORLD, &rank);
     MPI_Comm_size( MPI_COMM_WORLD, &numprocs);
     printf("Hello from process %d of %d \n",rank,numprocs);
-    chunk_size = 800/numprocs;
+    chunk_size = 10/numprocs;
     if (rank == 0) { /* Only on the root task... */
         /* Initialize Matrix and Vector */
         t1 = MPI_Wtime();
-        for(i=0;i<800;i++) {
-            for(j=0;j<800;j++) {
+        for(i=0;i<10;i++) {
+            for(j=0;j<10;j++) {
                 seq_result[i][j] = 0;
                 mtx1[i][j] = i+j;
                 mtx2[i][j] = i*j;
@@ -68,16 +68,16 @@ int main(int argc, char *argv[] ) {
         t2 = MPI_Wtime();
     }
     if (rank == 0) {
-        for(i=0;i<800;i++) {
-            for(j=0;j<800;j++) {
-                for(k=0;k<800;k++) {
+        for(i=0;i<10;i++) {
+            for(j=0;j<10;j++) {
+                for(k=0;k<10;k++) {
                     seq_result[i][j] = mtx1[i][k] * mtx2[k][j];
                 }
             }
         }
         printf("Sequential result:\n");
-        for(i=0;i<800;i++) {
-            for(j=0;j<800;j++) {
+        for(i=0;i<10;i++) {
+            for(j=0;j<10;j++) {
                 printf(" %d \t ",seq_result[i][j]);
             }
             printf("\n");
@@ -89,18 +89,18 @@ int main(int argc, char *argv[] ) {
     nrows/nprocs to each one */
     fprintf(stderr, "Computed Sequential result\n");
     t1 = MPI_Wtime();
-    transpose(mtx2, 800);
+    transpose(mtx2, 10);
 
-    MPI_Scatter(mtx1,800*chunk_size,MPI_INT,local_matrix1,800*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
+    MPI_Scatter(mtx1,10*chunk_size,MPI_INT,local_matrix1,10*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
 
-    MPI_Scatter(mtx2,800*chunk_size,MPI_INT,local_matrix2,800*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
+    MPI_Scatter(mtx2,10*chunk_size,MPI_INT,local_matrix2,10*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
 
     /*Each processor has a chunk of rows, now multiply and build a part of the solution vector
     */
     for(i=0;i<chunk_size;i++) {
-        for(j=0;j<800;j++) {
+        for(j=0;j<10;j++) {
             result[i][j] = 0;
-            for(k=0;k<800;k++) {
+            for(k=0;k<10;k++) {
                 result[i][j] += mtx1[i][k] * mtx2[k][j];
             }
         }
@@ -111,19 +111,18 @@ int main(int argc, char *argv[] ) {
     /*Display result */
     if(rank==0) {
         printf("Concurrent result:\n");
-        for(i=0;i<800;i++) {
-            for(j=0;j<800;j++) {
+        for(i=0;i<10;i++) {
+            for(j=0;j<10;j++) {
                 printf(" %d \t ",global_result[i][j]);
             }
             printf("\n");
         }
         printf("Time: %f\n", t2 - t1);
     }
-    MPI_Finalize();
 
     if(rank == 0){
-        for(i = 0; i < 800; i++){
-            for(j = 0; j < 800; j++){
+        for(i = 0; i < 10; i++){
+            for(j = 0; j < 10; j++){
                 if(global_result[i][j] != seq_result[i][j]){
                     printf("Own result and MPI result disagree i: %d j: %d\n", i, j);
                 }
@@ -131,5 +130,6 @@ int main(int argc, char *argv[] ) {
         }
         printf("Seq result and MPI result agree");
     }
+    MPI_Finalize();
     return 0;
 }
