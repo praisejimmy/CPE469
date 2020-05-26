@@ -21,8 +21,8 @@ int ** allocate_array(int ** array){
 
 void transpose(int **array, int square_size) {
     int i, j, temp;
-    for (i = 1; i < square_size; i++) {
-        for (j = 0; j < i; j++) {
+    for (i = 0; i < square_size; i++) {
+        for (j = i+1; j < square_size; j++) {
             temp = array[i][j];
             array[i][j] = array[j][i];
             array[j][i] = temp;
@@ -58,7 +58,7 @@ int main(int argc, char *argv[] ) {
     if (rank == 0) { /* Only on the root task... */
         /* Initialize Matrix and Vector */
         t1 = MPI_Wtime();
-        for(i=0;i<10;i++) {
+        for(i=1;i<=10;i++) {
             for(j=0;j<10;j++) {
                 seq_result[i][j] = 0;
                 mtx1[i][j] = i+j;
