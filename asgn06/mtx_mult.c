@@ -54,6 +54,18 @@ int main(int argc, char *argv[] ) {
     MPI_Comm_rank( MPI_COMM_WORLD, &rank);
     MPI_Comm_size( MPI_COMM_WORLD, &numprocs);
     chunk_size = 10/numprocs;
+    if (rank == 0) { /* Only on the root task... */
+        /* Initialize Matrix and Vector */
+        t1 = MPI_Wtime();
+        for(i=0;i<10;i++) {
+            for(j=0;j<10;j++) {
+                seq_result[i][j] = 0;
+                mtx1[i][j] = rand() % 16;
+                mtx2[i][j] = rand() % 16;
+            }
+        }
+        t2 = MPI_Wtime();
+    }
     if (rank == 0) {
         printf("Originals: \nMatrix1:\n");
         for(i=0;i<10;i++) {
@@ -69,18 +81,6 @@ int main(int argc, char *argv[] ) {
             }
             printf("\n");
         }
-    }
-    if (rank == 0) { /* Only on the root task... */
-        /* Initialize Matrix and Vector */
-        t1 = MPI_Wtime();
-        for(i=0;i<10;i++) {
-            for(j=0;j<10;j++) {
-                seq_result[i][j] = 0;
-                mtx1[i][j] = rand() % 16;
-                mtx2[i][j] = rand() % 16;
-            }
-        }
-        t2 = MPI_Wtime();
     }
     if (rank == 0) {
         for(i=0;i<10;i++) {
