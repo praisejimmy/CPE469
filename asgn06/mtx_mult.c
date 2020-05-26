@@ -72,7 +72,7 @@ int main(int argc, char *argv[] ) {
     if (rank == 0) { /* Only on the root task... */
         /* Initialize Matrix and Vector */
         t1 = MPI_Wtime();
-        for(i=1;i<=10;i++) {
+        for(i=0;i<10;i++) {
             for(j=0;j<10;j++) {
                 seq_result[i][j] = 0;
                 mtx1[i][j] = i+j;
