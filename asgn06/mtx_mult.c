@@ -61,8 +61,8 @@ int main(int argc, char *argv[] ) {
         for(i=0;i<10;i++) {
             for(j=0;j<10;j++) {
                 seq_result[i][j] = 0;
-                mtx1[i][j] = rand() % 1001
-                mtx2[i][j] = rand() % 1001
+                mtx1[i][j] = rand() % 16;
+                mtx2[i][j] = rand() % 16;
             }
         }
         t2 = MPI_Wtime();
