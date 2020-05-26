@@ -119,7 +119,7 @@ int main(int argc, char *argv[] ) {
     for(i=0;i<chunk_size;i++) {
         for(j=0;j<10;j++) {
             result[i][j] = 0;
-            for(k=0;k<10;k++) {
+            for(k=0;k<chunk_size;k++) {
                 result[i][j] += mtx1[i][k] * mtx2[j][k];
             }
         }
