@@ -54,6 +54,22 @@ int main(int argc, char *argv[] ) {
     MPI_Comm_rank( MPI_COMM_WORLD, &rank);
     MPI_Comm_size( MPI_COMM_WORLD, &numprocs);
     chunk_size = 10/numprocs;
+    if (rank == 0) {
+        printf("Originals: \nMatrix1:\n");
+        for(i=0;i<10;i++) {
+            for(j=0;j<10;j++) {
+                printf(" %d \t ",mtx1[i][j]);
+            }
+            printf("\n");
+        }
+        printf("Matrix2:\n");
+        for(i=0;i<10;i++) {
+            for(j=0;j<10;j++) {
+                printf(" %d \t ",mtx2[i][j]);
+            }
+            printf("\n");
+        }
+    }
     if (rank == 0) { /* Only on the root task... */
         /* Initialize Matrix and Vector */
         t1 = MPI_Wtime();
