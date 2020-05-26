@@ -21,7 +21,7 @@ int ** allocate_array(int ** array){
 
 void transpose(int **array, int square_size) {
     int i, j, temp;
-    printf("Before tranpose inside function\n")
+    printf("Before tranpose inside function\n");
     for (i = 0; i < square_size; i++) {
         for (j = i+1; j < square_size; j++) {
             temp = array[i][j];
