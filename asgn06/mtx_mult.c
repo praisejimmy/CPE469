@@ -91,22 +91,7 @@ int main(int argc, char *argv[] ) {
     fflush(stdout);
     t1 = MPI_Wtime();
     if (rank == 0) {
-        printf("Mtx 2 before:\n");
-        for (i = 0; i < 10; i++) {
-            for (j = 0; j < 10; j++) {
-                printf("%d\t", mtx2[i][j]);
-            }
-            printf("\n");
-        }
-        printf("Mtx2 after transpose:\n");
-
         transpose(mtx2, 10);
-        for (i = 0; i < 10; i++) {
-            for (j = 0; j < 10; j++) {
-                printf("%d\t", mtx2[i][j]);
-            }
-            printf("\n");
-        }
     }
 
     MPI_Scatter(mtx1,10*chunk_size,MPI_INT,local_matrix1,10*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
@@ -119,7 +104,7 @@ int main(int argc, char *argv[] ) {
         for(j=0;j<10;j++) {
             result[i][j] = 0;
             for(k=0;k<10;k++) {
-                result[i][j] += mtx1[i][k] * mtx2[k][j];
+                result[i][j] += mtx1[i][k] * mtx2[j][k];
             }
         }
     }
