@@ -107,33 +107,33 @@ int main(int argc, char *argv[] ) {
 
     MPI_Scatter(&(mtx1[0][0]),MTX_SIZE*chunk_size,MPI_INT,&(local_matrix1[0][0]),MTX_SIZE*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
     MPI_Bcast(&(mtx2[0][0]),MTX_SIZE * MTX_SIZE,MPI_INT,0,MPI_COMM_WORLD);
-    if (rank == 0) {
-        printf("RANK 0 BUFFER: %p\n", &local_matrix1);
-        printf("MTX1:\n");
-        for (i = 0; i < MTX_SIZE; i++) {
-            for (j = 0; j < MTX_SIZE; j++) {
-                printf("%d\t", local_matrix1[i][j]);
-            }
-            printf("\n");
-        }
-    }
-    if (rank == 1) {
-        printf("RANK 1 BUFFER: %p\n", &local_matrix1);
-        printf("MTX1:\n");
-        for (i = 0; i < MTX_SIZE; i++) {
-            for (j = 0; j < MTX_SIZE; j++) {
-                printf("%d\t", local_matrix1[i][j]);
-            }
-            printf("\n");
-        }
-        printf("MTX2:\n");
-        for (i = 0; i < MTX_SIZE; i++) {
-            for (j = 0; j < MTX_SIZE; j++) {
-                printf("%d\t", mtx2[i][j]);
-            }
-            printf("\n");
-        }
-    }
+    // if (rank == 0) {
+    //     printf("RANK 0 BUFFER: %p\n", &local_matrix1);
+    //     printf("MTX1:\n");
+    //     for (i = 0; i < MTX_SIZE; i++) {
+    //         for (j = 0; j < MTX_SIZE; j++) {
+    //             printf("%d\t", local_matrix1[i][j]);
+    //         }
+    //         printf("\n");
+    //     }
+    // }
+    // if (rank == 1) {
+    //     printf("RANK 1 BUFFER: %p\n", &local_matrix1);
+    //     printf("MTX1:\n");
+    //     for (i = 0; i < MTX_SIZE; i++) {
+    //         for (j = 0; j < MTX_SIZE; j++) {
+    //             printf("%d\t", local_matrix1[i][j]);
+    //         }
+    //         printf("\n");
+    //     }
+    //     printf("MTX2:\n");
+    //     for (i = 0; i < MTX_SIZE; i++) {
+    //         for (j = 0; j < MTX_SIZE; j++) {
+    //             printf("%d\t", mtx2[i][j]);
+    //         }
+    //         printf("\n");
+    //     }
+    // }
 
     /*Each processor has a chunk of rows, now multiply and build a part of the solution vector
     */
@@ -143,6 +143,14 @@ int main(int argc, char *argv[] ) {
             for(k=0;k<MTX_SIZE;k++) {
                 result[i][j] += local_matrix1[i][k] * mtx2[k][j];
             }
+        }
+    }
+    if (rank == 1) {
+        for (i = 0; i < MTX_SIZE; i++) {
+            for (j = 0; j < MTX_SIZE; j++) {
+                printf("%d\t", result[i][j]);
+            }
+            printf("\n");
         }
     }
     /*Send result back to master */
