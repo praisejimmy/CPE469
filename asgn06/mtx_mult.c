@@ -106,7 +106,7 @@ int main(int argc, char *argv[] ) {
     if (rank == 1) {
         printf("BUFFER: %p\n", &local_matrix1);
         printf("MTX1:\n");
-        for (i = 0; i < 1; i++) {
+        for (i = 0; i < MTX_SIZE; i++) {
             for (j = 0; j < MTX_SIZE; j++) {
                 printf("%d\t", local_matrix1[i][j]);
             }
