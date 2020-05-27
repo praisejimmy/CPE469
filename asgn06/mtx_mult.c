@@ -7,13 +7,13 @@
 int ** allocate_array(int ** array, int rows, int cols){
     int i = 0;
 
-    if((array = (int **) calloc(cols, sizeof(int *))) == NULL)
+    if((array = (int **) malloc(rows * sizeof(int *))) == NULL)
     {
         printf("FAILED\n");
         exit(-1);
     }
     for(i = 0; i < cols; i++){
-        if((array[i] = (int *)calloc(rows, sizeof(int))) == NULL){
+        if((array[i] = (int *)malloc(cols * sizeof(int))) == NULL){
             printf("FAILED\n");
             exit(-1);
         }
