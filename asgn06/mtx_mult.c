@@ -108,6 +108,7 @@ int main(int argc, char *argv[] ) {
         for (i = 0; i < 1; i++) {
             for (j = 0; j < MTX_SIZE; j++) {
                 printf("%d\t", local_matrix1[i][j]);
+                fflush(stdout);
             }
             printf("\n");
         }
