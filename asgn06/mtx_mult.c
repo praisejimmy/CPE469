@@ -4,16 +4,16 @@
 
 #define MTX_SIZE 800
 
-int ** allocate_array(int ** array){
+int ** allocate_array(int ** array, int rows, int cols){
     int i = 0;
 
-    if((array = (int **) calloc(MTX_SIZE, sizeof(int *))) == NULL)
+    if((array = (int **) calloc(rows, sizeof(int *))) == NULL)
     {
         perror(NULL);
         exit(-1);
     }
     for(i = 0; i < MTX_SIZE; i++){
-        if((array[i] = (int *)calloc(MTX_SIZE, sizeof(int))) == NULL){
+        if((array[i] = (int *)calloc(cols, sizeof(int))) == NULL){
             perror(NULL);
             exit(-1);
         }
@@ -43,13 +43,13 @@ int main(int argc, char *argv[] ) {
     MPI_Status status;
     /* Initialize MPI */
 
-    mtx1 = allocate_array(mtx1);
-    mtx2 = allocate_array(mtx2);
-    local_matrix1 = allocate_array(local_matrix1);
-    local_matrix2 = allocate_array(local_matrix2);
-    seq_result = allocate_array(seq_result);
-    global_result = allocate_array(global_result);
-    result = allocate_array(result);
+    mtx1 = allocate_array(mtx1, MTX_SIZE, MTX_SIZE);
+    mtx2 = allocate_array(mtx2, MTX_SIZE, MTX_SIZE);
+    local_matrix1 = allocate_array(local_matrix1, MTX_SIZE / 8, MTX_SIZE);
+    local_matrix2 = allocate_array(local_matrix2, MTX_SIZE / 8, MTX_SIZE);
+    seq_result = allocate_array(seq_result, MTX_SIZE, MTX_SIZE);
+    global_result = allocate_array(global_result, MTX_SIZE, MTX_SIZE);
+    result = allocate_array(result, MTX_SIZE / 8, MTX_SIZE);
 
 
     MPI_Init(&argc,&argv);
