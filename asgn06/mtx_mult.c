@@ -37,6 +37,9 @@ int main(int argc, char *argv[] ) {
     MPI_Comm_rank( MPI_COMM_WORLD, &rank);
     MPI_Comm_size( MPI_COMM_WORLD, &numprocs);
     chunk_size = MTX_SIZE/numprocs;
+    if (rank == 0) {
+        printf("Chunk size: %d\n", chunk_size);
+    }
     seq_result = allocate_array(seq_result, MTX_SIZE, MTX_SIZE);
     global_result = allocate_array(global_result, MTX_SIZE, MTX_SIZE);
     mtx1 = allocate_array(mtx1, MTX_SIZE, MTX_SIZE);
