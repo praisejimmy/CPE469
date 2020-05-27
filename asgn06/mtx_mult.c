@@ -5,7 +5,6 @@
 #define MTX_SIZE 400
 
 int ** allocate_array(int ** array, int rows, int cols){
-    int i = 0;
 
     int *ptr;
     int i; int j; int len;
