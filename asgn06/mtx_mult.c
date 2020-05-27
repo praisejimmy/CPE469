@@ -95,16 +95,16 @@ int main(int argc, char *argv[] ) {
         //     }
         //     printf("\n");
         // }
-        printf("Computed sequential calculation");
+        printf("Computed sequential calculation\n");
         printf("Time for sequential calculation: %f\n", t2 - t1);
     }
     /* Distribute Matricies */
     /* Assume the matrix is too big to bradcast. Send blocks of rows to each task,
     nrows/nprocs to each one */
-    t1 = MPI_Wtime();
 
     MPI_Scatter(&(mtx1[0][0]),MTX_SIZE*chunk_size,MPI_INT,&(local_matrix1[0][0]),MTX_SIZE*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
     MPI_Bcast(&(mtx2[0][0]),MTX_SIZE * MTX_SIZE,MPI_INT,0,MPI_COMM_WORLD);
+    t1 = MPI_Wtime();
     // if (rank == 0) {
     //     printf("RANK 0 BUFFER: %p\n", &local_matrix1);
     //     printf("MTX1:\n");
