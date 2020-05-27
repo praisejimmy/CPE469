@@ -110,12 +110,12 @@ int main(int argc, char *argv[] ) {
     }
     t1 = MPI_Wtime();
 
-    MPI_Scatter(mtx1,MTX_SIZE*chunk_size,MPI_INT,local_matrix1,MTX_SIZE*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
-
-    MPI_Bcast(mtx2,MTX_SIZE * MTX_SIZE,MPI_INT,0,MPI_COMM_WORLD);
     if (rank == 1) {
         printf("HELLO\n");
     }
+    MPI_Scatter(mtx1,MTX_SIZE*chunk_size,MPI_INT,local_matrix1,MTX_SIZE*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
+
+    MPI_Bcast(mtx2,MTX_SIZE * MTX_SIZE,MPI_INT,0,MPI_COMM_WORLD);
     if (rank == 1) {
         printf("MTX1:\n");
         for (i = 0; i < 1; i++) {
