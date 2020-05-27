@@ -114,7 +114,7 @@ int main(int argc, char *argv[] ) {
     MPI_Bcast(mtx2,MTX_SIZE * MTX_SIZE,MPI_INT,0,MPI_COMM_WORLD);
 
     if (rank == 1) {
-        printf("MTX1:\n")
+        printf("MTX1:\n");
         for (i = 0; i < chunk_size; i++) {
             for (j = 0; j < MTX_SIZE; j++) {
                 printf("%d\t", mtx1[i][j]);
