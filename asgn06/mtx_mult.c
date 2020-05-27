@@ -12,7 +12,7 @@ int ** allocate_array(int ** array, int rows, int cols){
         printf("FAILED\n");
         exit(-1);
     }
-    for(i = 0; i < MTX_SIZE; i++){
+    for(i = 0; i < cols; i++){
         if((array[i] = (int *)calloc(cols, sizeof(int))) == NULL){
             printf("FAILED\n");
             exit(-1);
@@ -102,6 +102,7 @@ int main(int argc, char *argv[] ) {
 
     MPI_Scatter(mtx1,MTX_SIZE*chunk_size,MPI_INT,local_matrix1,MTX_SIZE*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
     MPI_Bcast(mtx2,MTX_SIZE * MTX_SIZE,MPI_INT,0,MPI_COMM_WORLD);
+
     if (rank == 1) {
         printf("BUFFER: %p\n", &local_matrix1);
         printf("MTX1:\n");
