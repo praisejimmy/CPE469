@@ -29,7 +29,7 @@ int main(int argc, char *argv[] ) {
     // int ** global_result = NULL;
     // int ** seq_result = NULL;
     int mtx1[MTX_SIZE][MTX_SIZE]; int mtx2[MTX_SIZE][MTX_SIZE];
-    int local_matrix1[MTX_SIZE][MTX_SIZE]; int local_matrix2[MTX_SIZE][MTX_SIZE]; int result[MTX_SIZE][MTX_SIZE];
+    int local_matrix1[MTX_SIZE / 8][MTX_SIZE]; int local_matrix2[MTX_SIZE][MTX_SIZE]; int result[MTX_SIZE / 8][MTX_SIZE];
     int global_result[MTX_SIZE][MTX_SIZE];
     int seq_result[MTX_SIZE][MTX_SIZE];
     double t1, t2;
