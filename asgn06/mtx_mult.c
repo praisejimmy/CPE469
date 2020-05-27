@@ -168,7 +168,7 @@ int main(int argc, char *argv[] ) {
     // }
     if (rank == 0) {
         printf("Concurrent result calculated\n");
-        printf("Time for concurrent calculation: %f\n", t2 - t1)
+        printf("Time for concurrent calculation: %f\n", t2 - t1);
     }
     if(rank == 0){
         for(i = 0; i < MTX_SIZE && i != -1; i++){
