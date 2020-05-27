@@ -68,22 +68,22 @@ int main(int argc, char *argv[] ) {
         }
         t2 = MPI_Wtime();
     }
-    if (rank == 0) {
-        printf("Originals: \nMatrix1:\n");
-        for(i=0;i<MTX_SIZE;i++) {
-            for(j=0;j<MTX_SIZE;j++) {
-                printf(" %d \t ",mtx1[i][j]);
-            }
-            printf("\n");
-        }
-        printf("Matrix2:\n");
-        for(i=0;i<MTX_SIZE;i++) {
-            for(j=0;j<MTX_SIZE;j++) {
-                printf(" %d \t ",mtx2[i][j]);
-            }
-            printf("\n");
-        }
-    }
+    // if (rank == 0) {
+    //     printf("Originals: \nMatrix1:\n");
+    //     for(i=0;i<MTX_SIZE;i++) {
+    //         for(j=0;j<MTX_SIZE;j++) {
+    //             printf(" %d \t ",mtx1[i][j]);
+    //         }
+    //         printf("\n");
+    //     }
+    //     printf("Matrix2:\n");
+    //     for(i=0;i<MTX_SIZE;i++) {
+    //         for(j=0;j<MTX_SIZE;j++) {
+    //             printf(" %d \t ",mtx2[i][j]);
+    //         }
+    //         printf("\n");
+    //     }
+    // }
     if (rank == 0) {
         for(i=0;i<MTX_SIZE;i++) {
             for(j=0;j<MTX_SIZE;j++) {
@@ -120,6 +120,9 @@ int main(int argc, char *argv[] ) {
             result[i][j] = 0;
             for(k=0;k<MTX_SIZE;k++) {
                 result[i][j] += mtx1[i][k] * mtx2[k][j];
+                if (rank == 1) {
+                    printf("Calculated result: %d at i: %d, j: %d\n", result[i][j], i, j);
+                }
             }
         }
     }
