@@ -138,7 +138,7 @@ int main(int argc, char *argv[] ) {
     */
     for(i=0;i<chunk_size;i++) {
         for(j=0;j<MTX_SIZE;j++) {
-            result[i + (rank * chunk_size][j] = 0;
+            result[i + (rank * chunk_size)][j] = 0;
             for(k=0;k<MTX_SIZE;k++) {
                 result[i + (rank * chunk_size)][j] += local_matrix1[i][k] * mtx2[k][j];
             }
