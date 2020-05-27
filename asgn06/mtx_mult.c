@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <mpi.h>
 
-#define MTX_SIZE 400
+#define MTX_SIZE 800
 
 int ** allocate_array(int ** array, int rows, int cols){
     int i = 0;
