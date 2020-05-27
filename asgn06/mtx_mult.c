@@ -165,13 +165,13 @@ int main(int argc, char *argv[] ) {
             for(j = 0; j < MTX_SIZE && j != -1; j++){
                 if(global_result[i][j] != seq_result[i][j]){
                     printf("Seq result and MPI result disagree\n");
-                    i = -1;
-                    j = -1;
+                    i = -2;
+                    j = -2;
                 }
             }
         }
         if (i != -1 && j != -1) {
-            printf("Seq result and MPI result agree");    
+            printf("Seq result and MPI result agree");
         }
     }
     MPI_Finalize();
