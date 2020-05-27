@@ -144,27 +144,27 @@ int main(int argc, char *argv[] ) {
             }
         }
     }
-    if (rank == 1) {
-        printf("Proc 1 result: \n");
-        for (i = 0; i < MTX_SIZE; i++) {
-            for (j = 0; j < MTX_SIZE; j++) {
-                printf("%d\t", result[i][j]);
-            }
-            printf("\n");
-        }
-    }
+    // if (rank == 1) {
+    //     printf("Proc 1 result: \n");
+    //     for (i = 0; i < MTX_SIZE; i++) {
+    //         for (j = 0; j < MTX_SIZE; j++) {
+    //             printf("%d\t", result[i][j]);
+    //         }
+    //         printf("\n");
+    //     }
+    // }
     /*Send result back to master */
     MPI_Gather(&(result[0][0]),MTX_SIZE * MTX_SIZE,MPI_INT,&(global_result[0][0]),MTX_SIZE * MTX_SIZE,MPI_INT, 0,MPI_COMM_WORLD);
     t2 = MPI_Wtime();
     /*Display result */
     if(rank==0) {
-        // printf("Concurrent result:\n");
-        // for(i=0;i<MTX_SIZE;i++) {
-        //     for(j=0;j<MTX_SIZE;j++) {
-        //         printf(" %d \t ",global_result[i][j]);
-        //     }
-        //     printf("\n");
-        // }
+        printf("Concurrent result:\n");
+        for(i=0;i<MTX_SIZE;i++) {
+            for(j=0;j<MTX_SIZE;j++) {
+                printf(" %d \t ",global_result[i][j]);
+            }
+            printf("\n");
+        }
         printf("Time: %f\n", t2 - t1);
     }
 
