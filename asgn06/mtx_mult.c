@@ -97,6 +97,7 @@ int main(int argc, char *argv[] ) {
     nrows/nprocs to each one */
     if (rank == 0) {
         printf("Computed sequential result\n");
+        printf("INFO: %d", MTX_SIZE * chunk_size);
     }
     t1 = MPI_Wtime();
 
