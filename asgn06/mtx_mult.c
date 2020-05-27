@@ -7,8 +7,8 @@
 int ** allocate_array(int ** array, int rows, int cols){
     int i = 0;
 
-    int *ptr
-    int i,j, len;
+    int *ptr;
+    int i; int j; int len;
 
     len = sizeof(int *) * rows + sizeof(int) * cols * rows;
     array = (int **)malloc(len);
