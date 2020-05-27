@@ -161,14 +161,18 @@ int main(int argc, char *argv[] ) {
     }
 
     if(rank == 0){
-        for(i = 0; i < 10; i++){
-            for(j = 0; j < 10; j++){
+        for(i = 0; i < MTX_SIZE && i != -1; i++){
+            for(j = 0; j < MTX_SIZE && j != -1; j++){
                 if(global_result[i][j] != seq_result[i][j]){
-                    // printf("Own result and MPI result disagree i: %d j: %d\n", i, j);
+                    printf("Seq result and MPI result disagree\n");
+                    i = -1;
+                    j = -1;
                 }
             }
         }
-        printf("Seq result and MPI result agree");
+        if (i != -1 && j != -1) {
+            printf("Seq result and MPI result agree");    
+        }
     }
     MPI_Finalize();
     return 0;
