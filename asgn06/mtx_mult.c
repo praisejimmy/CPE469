@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <mpi.h>
 
-#define MTX_SIZE 800
+#define MTX_SIZE 100
 
 int ** allocate_array(int ** array, int rows, int cols){
     int i = 0;
@@ -108,7 +108,6 @@ int main(int argc, char *argv[] ) {
         for (i = 0; i < 1; i++) {
             for (j = 0; j < MTX_SIZE; j++) {
                 printf("%d\t", local_matrix1[i][j]);
-                fflush(stdout);
             }
             printf("\n");
         }
