@@ -48,11 +48,9 @@ int main(int argc, char *argv[] ) {
     MPI_Comm_rank( MPI_COMM_WORLD, &rank);
     MPI_Comm_size( MPI_COMM_WORLD, &numprocs);
     chunk_size = MTX_SIZE/numprocs;
-    if (rank == 0) {
-        mtx1 = allocate_array(mtx1, MTX_SIZE, MTX_SIZE);
-        seq_result = allocate_array(seq_result, MTX_SIZE, MTX_SIZE);
-        global_result = allocate_array(global_result, MTX_SIZE, MTX_SIZE);
-    }
+    seq_result = allocate_array(seq_result, MTX_SIZE, MTX_SIZE);
+    global_result = allocate_array(global_result, MTX_SIZE, MTX_SIZE);
+    mtx1 = allocate_array(mtx1, MTX_SIZE, MTX_SIZE);
     mtx2 = allocate_array(mtx2, MTX_SIZE, MTX_SIZE);
     local_matrix1 = allocate_array(local_matrix1, MTX_SIZE, MTX_SIZE);
     local_matrix2 = allocate_array(local_matrix2, MTX_SIZE, MTX_SIZE);
