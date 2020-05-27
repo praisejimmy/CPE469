@@ -135,7 +135,7 @@ int main(int argc, char *argv[] ) {
         for(j=0;j<MTX_SIZE;j++) {
             result[i][j] = 0;
             for(k=0;k<MTX_SIZE;k++) {
-                result[i][j] += mtx1[i][k] * mtx2[k][j];
+                result[i][j] += local_matrix1[i][k] * mtx2[k][j];
                 if (rank == 1) {
                     printf("Calculated result: %d at i: %d, j: %d\n", result[i][j], i, j);
                 }
