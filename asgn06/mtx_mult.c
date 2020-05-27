@@ -24,10 +24,14 @@ int ** allocate_array(int ** array, int rows, int cols){
 int main(int argc, char *argv[] ) {
     int numprocs, rank, chunk_size, i,j,k;
     int max, mymax,rem;
-    int ** mtx1 = NULL; int ** mtx2 = NULL;
-    int **local_matrix1 = NULL; int **local_matrix2 = NULL; int ** result = NULL;
-    int ** global_result = NULL;
-    int ** seq_result = NULL;
+    // int ** mtx1 = NULL; int ** mtx2 = NULL;
+    // int **local_matrix1 = NULL; int **local_matrix2 = NULL; int ** result = NULL;
+    // int ** global_result = NULL;
+    // int ** seq_result = NULL;
+    int mtx1[MTX_SIZE][MTX_SIZE]; int mtx2[MTX_SIZE][MTX_SIZE];
+    int local_matrix1[MTX_SIZE][MTX_SIZE]; int local_matrix2[MTX_SIZE][MTX_SIZE]; int result[MTX_SIZE][MTX_SIZE];
+    int global_result[MTX_SIZE][MTX_SIZE];
+    int seq_result[MTX_SIZE][MTX_SIZE];
     double t1, t2;
     MPI_Status status;
     /* Initialize MPI */
