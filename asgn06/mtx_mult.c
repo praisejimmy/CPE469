@@ -113,14 +113,14 @@ int main(int argc, char *argv[] ) {
         }
     }
     if (rank == 1) {
-        // printf("BUFFER: %p\n", &local_matrix1);
-        // printf("MTX1:\n");
-        // for (i = 0; i < MTX_SIZE; i++) {
-        //     for (j = 0; j < MTX_SIZE; j++) {
-        //         printf("%d\t", local_matrix1[i][j]);
-        //     }
-        //     printf("\n");
-        // }
+        printf("RANK 1 BUFFER: %p\n", &local_matrix1);
+        printf("MTX1:\n");
+        for (i = 0; i < MTX_SIZE; i++) {
+            for (j = 0; j < MTX_SIZE; j++) {
+                printf("%d\t", local_matrix1[i][j]);
+            }
+            printf("\n");
+        }
         // printf("MTX2:\n");
         // for (i = 0; i < MTX_SIZE; i++) {
         //     for (j = 0; j < MTX_SIZE; j++) {
@@ -137,9 +137,6 @@ int main(int argc, char *argv[] ) {
             result[i][j] = 0;
             for(k=0;k<MTX_SIZE;k++) {
                 result[i][j] += local_matrix1[i][k] * mtx2[k][j];
-                if (rank == 1) {
-                    printf("Calculated result: %d at i: %d, j: %d\n", result[i][j], i, j);
-                }
             }
         }
     }
