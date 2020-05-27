@@ -138,33 +138,33 @@ int main(int argc, char *argv[] ) {
     */
     for(i=0;i<chunk_size;i++) {
         for(j=0;j<MTX_SIZE;j++) {
-            result[i + (rank * chunk_size)][j] = 0;
+            result[i][j] = 0;
             for(k=0;k<MTX_SIZE;k++) {
-                result[i + (rank * chunk_size)][j] += local_matrix1[i][k] * mtx2[k][j];
+                result[i][j] += local_matrix1[i][k] * mtx2[k][j];
             }
         }
     }
-    // if (rank == 1) {
-    //     printf("Proc 1 result: \n");
-    //     for (i = 0; i < MTX_SIZE; i++) {
-    //         for (j = 0; j < MTX_SIZE; j++) {
-    //             printf("%d\t", result[i][j]);
-    //         }
-    //         printf("\n");
-    //     }
-    // }
-    /*Send result back to master */
-    MPI_Gather(&(result[0][0]),MTX_SIZE * MTX_SIZE,MPI_INT,&(global_result[0][0]),MTX_SIZE * MTX_SIZE,MPI_INT, 0,MPI_COMM_WORLD);
-    t2 = MPI_Wtime();
-    /*Display result */
-    if(rank==0) {
-        printf("Concurrent result:\n");
-        for(i=0;i<MTX_SIZE;i++) {
-            for(j=0;j<MTX_SIZE;j++) {
-                printf(" %d \t ",global_result[i][j]);
+    if (rank == 1) {
+        printf("Proc 1 result: \n");
+        for (i = 0; i < MTX_SIZE; i++) {
+            for (j = 0; j < MTX_SIZE; j++) {
+                printf("%d\t", result[i][j]);
             }
             printf("\n");
         }
+    }
+    /*Send result back to master */
+    MPI_Gather(result,MTX_SIZE * MTX_SIZE,MPI_INT,&(global_result[0][0]),MTX_SIZE * MTX_SIZE,MPI_INT, 0,MPI_COMM_WORLD);
+    t2 = MPI_Wtime();
+    /*Display result */
+    if(rank==0) {
+        // printf("Concurrent result:\n");
+        // for(i=0;i<MTX_SIZE;i++) {
+        //     for(j=0;j<MTX_SIZE;j++) {
+        //         printf(" %d \t ",global_result[i][j]);
+        //     }
+        //     printf("\n");
+        // }
         printf("Time: %f\n", t2 - t1);
     }
 
