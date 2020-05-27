@@ -154,7 +154,7 @@ int main(int argc, char *argv[] ) {
     //     }
     // }
     /*Send result back to master */
-    MPI_Gather(&(result[(rank * chunk_size)][0]),MTX_SIZE * MTX_SIZE,MPI_INT,global_result,MTX_SIZE * MTX_SIZE,MPI_INT, 0,MPI_COMM_WORLD);
+    MPI_Gather(result,MTX_SIZE * chunk_size,MPI_INT,global_result,MTX_SIZE * chunk_size,MPI_INT, 0,MPI_COMM_WORLD);
     t2 = MPI_Wtime();
     /*Display result */
     if(rank==0) {
