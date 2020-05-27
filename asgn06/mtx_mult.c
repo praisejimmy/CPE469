@@ -88,12 +88,12 @@ int main(int argc, char *argv[] ) {
             }
         }
         printf("Sequential result:\n");
-        // for(i=0;i<MTX_SIZE;i++) {
-        //     for(j=0;j<MTX_SIZE;j++) {
-        //         printf(" %d \t ",seq_result[i][j]);
-        //     }
-        //     printf("\n");
-        // }
+        for(i=0;i<MTX_SIZE;i++) {
+            for(j=0;j<MTX_SIZE;j++) {
+                printf(" %d \t ",seq_result[i][j]);
+            }
+            printf("\n");
+        }
         printf("Time: %f\n", t2 - t1);
     }
     /* Distribute Matricies */
@@ -151,12 +151,12 @@ int main(int argc, char *argv[] ) {
     /*Display result */
     if(rank==0) {
         printf("Concurrent result:\n");
-        // for(i=0;i<MTX_SIZE;i++) {
-        //     for(j=0;j<MTX_SIZE;j++) {
-        //         printf(" %d \t ",global_result[i][j]);
-        //     }
-        //     printf("\n");
-        // }
+        for(i=0;i<MTX_SIZE;i++) {
+            for(j=0;j<MTX_SIZE;j++) {
+                printf(" %d \t ",global_result[i][j]);
+            }
+            printf("\n");
+        }
         printf("Time: %f\n", t2 - t1);
     }
 
@@ -164,7 +164,7 @@ int main(int argc, char *argv[] ) {
         for(i = 0; i < 10; i++){
             for(j = 0; j < 10; j++){
                 if(global_result[i][j] != seq_result[i][j]){
-                    printf("Own result and MPI result disagree i: %d j: %d\n", i, j);
+                    // printf("Own result and MPI result disagree i: %d j: %d\n", i, j);
                 }
             }
         }
