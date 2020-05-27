@@ -63,22 +63,22 @@ int main(int argc, char *argv[] ) {
         }
         t2 = MPI_Wtime();
     }
-    // if (rank == 0) {
-    //     printf("Originals: \nMatrix1:\n");
-    //     for(i=0;i<MTX_SIZE;i++) {
-    //         for(j=0;j<MTX_SIZE;j++) {
-    //             printf(" %d \t ",mtx1[i][j]);
-    //         }
-    //         printf("\n");
-    //     }
-    //     printf("Matrix2:\n");
-    //     for(i=0;i<MTX_SIZE;i++) {
-    //         for(j=0;j<MTX_SIZE;j++) {
-    //             printf(" %d \t ",mtx2[i][j]);
-    //         }
-    //         printf("\n");
-    //     }
-    // }
+    if (rank == 0) {
+        printf("Originals: \nMatrix1:\n");
+        for(i=0;i<MTX_SIZE;i++) {
+            for(j=0;j<MTX_SIZE;j++) {
+                printf(" %d \t ",mtx1[i][j]);
+            }
+            printf("\n");
+        }
+        printf("Matrix2:\n");
+        for(i=0;i<MTX_SIZE;i++) {
+            for(j=0;j<MTX_SIZE;j++) {
+                printf(" %d \t ",mtx2[i][j]);
+            }
+            printf("\n");
+        }
+    }
     if (rank == 0) {
         for(i=0;i<MTX_SIZE;i++) {
             for(j=0;j<MTX_SIZE;j++) {
@@ -88,12 +88,12 @@ int main(int argc, char *argv[] ) {
             }
         }
         printf("Sequential result:\n");
-        for(i=0;i<MTX_SIZE;i++) {
-            for(j=0;j<MTX_SIZE;j++) {
-                printf(" %d \t ",seq_result[i][j]);
-            }
-            printf("\n");
-        }
+        // for(i=0;i<MTX_SIZE;i++) {
+        //     for(j=0;j<MTX_SIZE;j++) {
+        //         printf(" %d \t ",seq_result[i][j]);
+        //     }
+        //     printf("\n");
+        // }
         printf("Time: %f\n", t2 - t1);
     }
     /* Distribute Matricies */
@@ -116,23 +116,23 @@ int main(int argc, char *argv[] ) {
     //         printf("\n");
     //     }
     // }
-    // if (rank == 1) {
-    //     printf("RANK 1 BUFFER: %p\n", &local_matrix1);
-    //     printf("MTX1:\n");
-    //     for (i = 0; i < MTX_SIZE; i++) {
-    //         for (j = 0; j < MTX_SIZE; j++) {
-    //             printf("%d\t", local_matrix1[i][j]);
-    //         }
-    //         printf("\n");
-    //     }
-    //     printf("MTX2:\n");
-    //     for (i = 0; i < MTX_SIZE; i++) {
-    //         for (j = 0; j < MTX_SIZE; j++) {
-    //             printf("%d\t", mtx2[i][j]);
-    //         }
-    //         printf("\n");
-    //     }
-    // }
+    if (rank == 1) {
+        printf("RANK 1 BUFFER: %p\n", &local_matrix1);
+        printf("MTX1:\n");
+        for (i = 0; i < MTX_SIZE; i++) {
+            for (j = 0; j < MTX_SIZE; j++) {
+                printf("%d\t", local_matrix1[i][j]);
+            }
+            printf("\n");
+        }
+        printf("MTX2:\n");
+        for (i = 0; i < MTX_SIZE; i++) {
+            for (j = 0; j < MTX_SIZE; j++) {
+                printf("%d\t", mtx2[i][j]);
+            }
+            printf("\n");
+        }
+    }
 
     /*Each processor has a chunk of rows, now multiply and build a part of the solution vector
     */
@@ -157,16 +157,16 @@ int main(int argc, char *argv[] ) {
     MPI_Gather(&(result[0][0]),MTX_SIZE * chunk_size,MPI_INT,&(global_result[0][0]),MTX_SIZE * chunk_size,MPI_INT, 0,MPI_COMM_WORLD);
     t2 = MPI_Wtime();
     /*Display result */
-    if(rank==0) {
-        printf("Concurrent result:\n");
-        for(i=0;i<MTX_SIZE;i++) {
-            for(j=0;j<MTX_SIZE;j++) {
-                printf(" %d \t ",global_result[i][j]);
-            }
-            printf("\n");
-        }
-        printf("Time: %f\n", t2 - t1);
-    }
+    // if(rank==0) {
+    //     printf("Concurrent result:\n");
+    //     for(i=0;i<MTX_SIZE;i++) {
+    //         for(j=0;j<MTX_SIZE;j++) {
+    //             printf(" %d \t ",global_result[i][j]);
+    //         }
+    //         printf("\n");
+    //     }
+    //     printf("Time: %f\n", t2 - t1);
+    // }
 
     if(rank == 0){
         for(i = 0; i < MTX_SIZE && i != -1; i++){
