@@ -7,13 +7,13 @@
 int ** allocate_array(int ** array, int rows, int cols){
 
     int *ptr;
-    int i; int j; int len;
+    int i; int len;
 
     len = sizeof(int *) * rows + sizeof(int) * cols * rows;
     array = (int **)malloc(len);
 
     // ptr is now pointing to the first element in of 2D array
-    ptr = (int *)(arr + r);
+    ptr = (int *)(array + rows);
 
     // for loop to point rows pointer to appropriate location in 2D array
     for(i = 0; i < rows; i++)
