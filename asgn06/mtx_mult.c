@@ -9,27 +9,16 @@ int ** allocate_array(int ** array, int rows, int cols){
 
     if((array = (int **) calloc(rows, sizeof(int *))) == NULL)
     {
-        perror(NULL);
+        printf("FAILED\n");
         exit(-1);
     }
     for(i = 0; i < MTX_SIZE; i++){
         if((array[i] = (int *)calloc(cols, sizeof(int))) == NULL){
-            perror(NULL);
+            printf("FAILED\n");
             exit(-1);
         }
     }
     return array;
-}
-
-void transpose(int **array, int square_size) {
-    int i, j, temp;
-    for (i = 1; i < square_size; i++) {
-        for (j = 0; j < i; j++) {
-            temp = array[i][j];
-            array[i][j] = array[j][i];
-            array[j][i] = temp;
-        }
-    }
 }
 
 int main(int argc, char *argv[] ) {
