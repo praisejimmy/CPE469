@@ -111,6 +111,7 @@ int main(int argc, char *argv[] ) {
     MPI_Scatter(mtx1,MTX_SIZE*chunk_size,MPI_INT,local_matrix1,MTX_SIZE*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
     MPI_Bcast(mtx2,MTX_SIZE * MTX_SIZE,MPI_INT,0,MPI_COMM_WORLD);
     if (rank == 1) {
+        printf("BUFFER: %p\n", &local_matrix1);
         printf("MTX1:\n");
         for (i = 0; i < 1; i++) {
             for (j = 0; j < MTX_SIZE; j++) {
