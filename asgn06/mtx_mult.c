@@ -113,44 +113,48 @@ int main(int argc, char *argv[] ) {
 
     MPI_Bcast(mtx2,MTX_SIZE * MTX_SIZE,MPI_INT,0,MPI_COMM_WORLD);
 
-    /*Each processor has a chunk of rows, now multiply and build a part of the solution vector
-    */
-    for(i=0;i<chunk_size;i++) {
-        for(j=0;j<MTX_SIZE;j++) {
-            result[i][j] = 0;
-            for(k=0;k<MTX_SIZE;k++) {
-                result[i][j] += mtx1[i][k] * mtx2[k][j];
-                if (rank == 1) {
-                    printf("Calculated result: %d at i: %d, j: %d\n", result[i][j], i, j);
-                }
-            }
-        }
-    }
-    /*Send result back to master */
-    MPI_Gather(result,chunk_size,MPI_INT,global_result,chunk_size,MPI_INT, 0,MPI_COMM_WORLD);
-    t2 = MPI_Wtime();
-    /*Display result */
-    if(rank==0) {
-        printf("Concurrent result:\n");
-        // for(i=0;i<MTX_SIZE;i++) {
-        //     for(j=0;j<MTX_SIZE;j++) {
-        //         printf(" %d \t ",global_result[i][j]);
-        //     }
-        //     printf("\n");
-        // }
-        printf("Time: %f\n", t2 - t1);
+    if (rank == 1) {
+        printf("HELLO I AM 1");
     }
 
-    if(rank == 0){
-        for(i = 0; i < 10; i++){
-            for(j = 0; j < 10; j++){
-                if(global_result[i][j] != seq_result[i][j]){
-                    printf("Own result and MPI result disagree i: %d j: %d\n", i, j);
-                }
-            }
-        }
-        printf("Seq result and MPI result agree");
-    }
+    /*Each processor has a chunk of rows, now multiply and build a part of the solution vector
+    */
+    // for(i=0;i<chunk_size;i++) {
+    //     for(j=0;j<MTX_SIZE;j++) {
+    //         result[i][j] = 0;
+    //         for(k=0;k<MTX_SIZE;k++) {
+    //             result[i][j] += mtx1[i][k] * mtx2[k][j];
+    //             if (rank == 1) {
+    //                 printf("Calculated result: %d at i: %d, j: %d\n", result[i][j], i, j);
+    //             }
+    //         }
+    //     }
+    // }
+    // /*Send result back to master */
+    // MPI_Gather(result,chunk_size,MPI_INT,global_result,chunk_size,MPI_INT, 0,MPI_COMM_WORLD);
+    // t2 = MPI_Wtime();
+    // /*Display result */
+    // if(rank==0) {
+    //     printf("Concurrent result:\n");
+    //     // for(i=0;i<MTX_SIZE;i++) {
+    //     //     for(j=0;j<MTX_SIZE;j++) {
+    //     //         printf(" %d \t ",global_result[i][j]);
+    //     //     }
+    //     //     printf("\n");
+    //     // }
+    //     printf("Time: %f\n", t2 - t1);
+    // }
+    //
+    // if(rank == 0){
+    //     for(i = 0; i < 10; i++){
+    //         for(j = 0; j < 10; j++){
+    //             if(global_result[i][j] != seq_result[i][j]){
+    //                 printf("Own result and MPI result disagree i: %d j: %d\n", i, j);
+    //             }
+    //         }
+    //     }
+    //     printf("Seq result and MPI result agree");
+    // }
     MPI_Finalize();
     return 0;
 }
