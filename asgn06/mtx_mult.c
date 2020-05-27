@@ -122,12 +122,12 @@ int main(int argc, char *argv[] ) {
             printf("\n");
         }
         printf("MTX2:\n");
-        for (i = 0; i < MTX_SIZE; i++) {
-            for (j = 0; j < MTX_SIZE; j++) {
-                printf("%d\t", mtx2[i][j]);
-            }
-            printf("\n");
-        }
+        // for (i = 0; i < MTX_SIZE; i++) {
+        //     for (j = 0; j < MTX_SIZE; j++) {
+        //         printf("%d\t", mtx2[i][j]);
+        //     }
+        //     printf("\n");
+        // }
     }
 
     /*Each processor has a chunk of rows, now multiply and build a part of the solution vector
