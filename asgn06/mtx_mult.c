@@ -181,7 +181,7 @@ int main(int argc, char *argv[] ) {
             }
         }
         if (i != -1 && j != -1) {
-            printf("Seq result and MPI result agree");
+            printf("Seq result and MPI result agree\n");
         }
     }
     MPI_Finalize();
