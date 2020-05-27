@@ -44,13 +44,13 @@ int main(int argc, char *argv[] ) {
     if (rank == 0) {
         printf("Chunk size: %d\n", chunk_size);
     }
-    seq_result = allocate_array(seq_result, MTX_SIZE, MTX_SIZE);
-    global_result = allocate_array(global_result, MTX_SIZE, MTX_SIZE);
-    mtx1 = allocate_array(mtx1, MTX_SIZE, MTX_SIZE);
-    mtx2 = allocate_array(mtx2, MTX_SIZE, MTX_SIZE);
-    local_matrix1 = allocate_array(local_matrix1, MTX_SIZE, MTX_SIZE);
-    local_matrix2 = allocate_array(local_matrix2, MTX_SIZE, MTX_SIZE);
-    result = allocate_array(result, MTX_SIZE, MTX_SIZE);
+    // seq_result = allocate_array(seq_result, MTX_SIZE, MTX_SIZE);
+    // global_result = allocate_array(global_result, MTX_SIZE, MTX_SIZE);
+    // mtx1 = allocate_array(mtx1, MTX_SIZE, MTX_SIZE);
+    // mtx2 = allocate_array(mtx2, MTX_SIZE, MTX_SIZE);
+    // local_matrix1 = allocate_array(local_matrix1, MTX_SIZE, MTX_SIZE);
+    // local_matrix2 = allocate_array(local_matrix2, MTX_SIZE, MTX_SIZE);
+    // result = allocate_array(result, MTX_SIZE, MTX_SIZE);
     if (rank == 0) { /* Only on the root task... */
         /* Initialize Matrix and Vector */
         t1 = MPI_Wtime();
