@@ -102,7 +102,16 @@ int main(int argc, char *argv[] ) {
 
     MPI_Scatter(&(mtx1[0][0]),MTX_SIZE*chunk_size,MPI_INT,&(local_matrix1[0][0]),MTX_SIZE*chunk_size,MPI_INT,0,MPI_COMM_WORLD);
     MPI_Bcast(&(mtx2[0][0]),MTX_SIZE * MTX_SIZE,MPI_INT,0,MPI_COMM_WORLD);
-
+    if (rank == 0) {
+        printf("BUFFER: %p\n", &local_matrix1);
+        printf("MTX1:\n");
+        for (i = 0; i < MTX_SIZE; i++) {
+            for (j = 0; j < MTX_SIZE; j++) {
+                printf("%d\t", local_matrix1[i][j]);
+            }
+            printf("\n");
+        }
+    }
     if (rank == 1) {
         printf("BUFFER: %p\n", &local_matrix1);
         printf("MTX1:\n");
