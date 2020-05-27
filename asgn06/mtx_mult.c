@@ -115,7 +115,7 @@ int main(int argc, char *argv[] ) {
 
     if (rank == 1) {
         printf("MTX1:\n");
-        for (i = 0; i < chunk_size; i++) {
+        for (i = 0; i < 1; i++) {
             for (j = 0; j < MTX_SIZE; j++) {
                 printf("%d\t", mtx1[i][j]);
             }
