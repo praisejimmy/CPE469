@@ -91,7 +91,7 @@ int main(int argc, char *argv[] ) {
         //     printf("\n");
         // }
         printf("Computed sequential calculation\n");
-        printf("Time for sequential calculation: %f\n", t2 - t1);
+        printf("Time for sequential calculation: %f\n\n", t2 - t1);
     }
     /* Distribute Matricies */
     /* Assume the matrix is too big to bradcast. Send blocks of rows to each task,
@@ -163,7 +163,7 @@ int main(int argc, char *argv[] ) {
     // }
     if (rank == 0) {
         printf("Concurrent result calculated\n");
-        printf("Time for concurrent calculation: %f\n", t2 - t1);
+        printf("Time for concurrent calculation: %f\n\n", t2 - t1);
     }
     if(rank == 0){
         for(i = 0; i < MTX_SIZE && i != -1; i++){
